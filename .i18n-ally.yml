@@ -1,0 +1,72 @@
+# i18n Ally Configuration for Nuxt 3
+# https://github.com/lokalise/i18n-ally
+
+# Project locales
+localesPaths:
+  - i18n/locales
+
+# Source language (the language you write your code in)
+sourceLanguage: en
+
+# Display language (the language shown in the editor)
+displayLanguage: en
+
+# Key style (nested for nested JSON structure)
+keystyle: nested
+
+# Enabled frameworks
+enabledFrameworks:
+  - vue
+  - vue-sfc
+  - nuxt
+
+# Enabled parsers
+enabledParsers:
+  - json
+
+# Path matcher pattern
+pathMatcher: '{locale}.json'
+
+# Namespace support (disabled for flat structure)
+namespace: false
+
+# Full reload on file changes
+fullReloadOnChanged: true
+
+# Diagnostic settings
+diagnostic:
+  missingKey: hint
+
+# Editor preferences
+editor:
+  preferEditor: true
+
+# Annotations
+annotations: true
+annotation:
+  inPlace: true
+
+# Keep fulfilled (don't remove keys when they're used)
+keepFulfilled: true
+
+# Usage scanning ignore patterns
+usage:
+  scanningIgnore:
+    - node_modules/**
+    - dist/**
+    - .nuxt/**
+    - .output/**
+    - .git/**
+
+# Refactor templates
+refactor:
+  templates: []
+
+# Explicit locale detection
+locales:
+  - en
+  - ar
+
+# Enable all features
+enabled: true
+

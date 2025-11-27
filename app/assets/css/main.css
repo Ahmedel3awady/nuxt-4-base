@@ -1,0 +1,214 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@theme {
+  --color-primary: #91C954;
+  --color-primary-light: #F9FAF9;
+  --color-secondary: #050607;
+  --color-light: #fff;
+  --color-gray: #959595;
+  --color-light-gray: #F6F7F6;
+  --color-secondary-gray: #DEE0DE;
+  --ui-header-height: 112px;
+  --secondary-filter: brightness(0) saturate(100%) invert(2%) sepia(4%) saturate(1796%) hue-rotate(168deg) brightness(107%) contrast(100%);
+}
+
+@layer components {
+  .container {
+    @apply px-[15px] mx-auto;
+  }
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+
+  @apply antialiased text-default bg-default scheme-light dark:scheme-dark;
+}
+
+@keyframes pulsecust {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.4);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.4s;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+}
+
+/* Slide animation for components */
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+
+.slide-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.responsive-text {
+  @apply max-w-fit overflow-hidden text-ellipsis line-clamp-2;
+}
+
+.tab-box {
+  transition: all 0.3s ease-in-out;
+  background-color: white;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+
+    img {
+      animation: pulsecust 1s linear infinite;
+    }
+  }
+
+  &.active {
+    transform: translateY(-4px);
+
+    img {
+      animation: pulsecust 1s linear infinite;
+    }
+  }
+
+  &.inactive {
+    background-color: white;
+    border-color: transparent;
+  }
+}
+
+/* Custom Scrollbar Styles */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) rgba(37, 131, 251, 0.1);
+}
+
+/* Webkit Scrollbar (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(37, 131, 251, 0.1);
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(37, 131, 251, 0.8);
+}
+
+*::-webkit-scrollbar-corner {
+  background: rgba(37, 131, 251, 0.1);
+}
+
+/* Hide number input arrows */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+textarea {
+  resize: none;
+}
+
+.custom-slider {}
+
+.custom-slider .controls {}
+
+.custom-slider .controls .arrows {}
+
+.custom-slider .next-btn,
+.custom-slider .prev-btn {
+  position: relative;
+  inset: 0 !important;
+  width: 50px !important;
+  height: 50px !important;
+  background-color: var(--color-primary);
+  border: none;
+  border: 1px solid var(--color-primary);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  z-index: 10;
+  border-radius: 8px;
+  display: flex;
+}
+
+.custom-slider .next-btn:hover,
+.custom-slider .prev-btn:hover {
+  --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  background-color: transparent;
+}
+
+.custom-slider .next-btn.disabled,
+.custom-slider .prev-btn.disabled {
+  cursor: no-drop;
+  background-color: transparent !important;
+}
+
+.custom-slider .next-btn:before {
+  content: '';
+  background: url('/imgs/icons/arrow-left.svg') no-repeat center center / 1.5rem;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-slider .prev-btn:before {
+  content: '';
+  background: url('/imgs/icons/arrow-right.svg') no-repeat center center / 1.5rem;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-slider .dot-btn {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50%;
+  background-color: var(--color-secondary-gray);
+  cursor: pointer;
+}
+
+.custom-slider .dot-btn.btn-active {
+  background-color: var(--color-primary);
+}
+
+.custom-slider .swiper-slide {
+  transition: all 0.5s ease;
+}
+
+.custom-slider .hovered-slide {
+  flex: 0 0 45% !important;
+  z-index: 10;
+}
