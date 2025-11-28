@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   },
 
   // SPA mode for static build with authentication
-  ssr: false,
+  // ssr: false,
 
   css: ["~/assets/css/main.css", "~/assets/font/stylesheet.css"],
   modules: ["@nuxt/ui", "@nuxtjs/i18n", "@vee-validate/nuxt", "nuxt-charts"],
@@ -56,7 +56,7 @@ export default defineNuxtConfig({
   },
   ui: {
     colorMode: false,
-    
+
   },
   i18n: {
     defaultLocale: "ar",
