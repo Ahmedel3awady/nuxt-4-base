@@ -59,7 +59,8 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {});
-const { value, errors } = useCustomField<string>(props.name);
+const nameRef = toRef(props, 'name');
+const { value, errors } = useField<string>(nameRef);
 </script>
 <style>
 .custom-radio-group {

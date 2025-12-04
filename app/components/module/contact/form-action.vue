@@ -1,10 +1,7 @@
 <template>
   <div class="contact-us-page-content-inner">
     <!-- START:: CONTACT US FORM HEADER -->
-    <ui-page-title
-      class="contact-form-header text-center"
-      v-if="!successMessage"
-    >
+    <ui-page-title class="contact-form-header text-center" v-if="!successMessage">
       <h3 class="text-light font-normal lg:text-lg text-base mb-6 relative">
         <div v-if="currentStep !== 1" class="lg:absolute lg:top-0 lg:right-0 lg:mb-0 mb-4">
           <core-button
@@ -17,18 +14,15 @@
               alt="arrow-right"
               class="w-6 h-6 light-filter icon-image"
             />
-            {{ $t("buttons.previous") }}
+            {{ $t('buttons.previous') }}
           </core-button>
         </div>
         الخطوة رقم {{ currentStep }} من {{ totalSteps }}
-
       </h3>
       <h1 class="text-light font-bold lg:text-3xl text-xl lg:mb-14 mb-10 relative">
         <transition name="fade-up" mode="out-in">
           <div v-if="currentStep === 1">ما هو مجالك الصناعي؟</div>
-          <div v-else-if="currentStep === 2">
-            كم عدد المركبات أو الأسطول التي تديرها؟
-          </div>
+          <div v-else-if="currentStep === 2">كم عدد المركبات أو الأسطول التي تديرها؟</div>
           <div v-else-if="currentStep === 3">كيف يمكننا التواصل معك؟</div>
         </transition>
       </h1>
@@ -43,116 +37,17 @@
       class="!relative overflow-hidden h-full"
     >
       <transition name="fade-up" mode="out-in" appear>
-        <div v-if="currentStep === 1" key="step1" class="step-one-container">
-          <form-radio-group
-            v-model="form.industry"
-            name="industry"
-            :items="
-              industryItems.map((item) => ({
-                label: $t(`labels.${item.value}`),
-                value: item.value.toString(),
-                icon: `/imgs/contact/${item.value}.svg`,
-              }))
-            "
-          />
-          <div class="flex justify-center">
-            <core-button
-              type="button"
-              :loading="loading"
-              class="mt-12 mx-auto"
-              @click="nextStep"
-            >
-              {{ $t("buttons.next") }}
-            </core-button>
-          </div>
-        </div>
-        <div
-          v-else-if="currentStep === 2"
-          key="step2"
-          class="step-two-container"
-        >
-          <form-radio-group
-            v-model="form.fleet_size"
-            name="fleet_size"
-            :items="fleetItems"
-            class="big-radio-group"
-          />
-
-          <div class="flex justify-center">
-            <core-button
-              :loading="loading"
-              class="mt-12 mx-auto"
-              @click="nextStep"
-            >
-              {{ $t("buttons.next") }}
-            </core-button>
-          </div>
-        </div>
-        <div
-          v-else-if="currentStep === 3"
-          key="step3"
-          class="step-three-container"
-        >
-          <UCard
-            class="rounded-2xl py-8 px-4 lg:px-8 lg:w-[515px] w-full mx-auto"
-            :ui="{ body: '!p-0' }"
-          >
-            <template #default>
-              <div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
-                <form-input
-                  name="first_name"
-                  :placeholder="$t('placeholder.first_name')"
-                  :label="$t('labels.first_name')"
-                  required
-                  v-model="form.first_name"
-                  class="col-span-2 lg:col-span-1"
-                />
-                <form-input
-                  name="last_name"
-                  :placeholder="$t('placeholder.last_name')"
-                  :label="$t('labels.last_name')"
-                  required
-                  v-model="form.last_name"
-                  class="col-span-2 lg:col-span-1"
-                />
-                <form-input
-                  name="phone"
-                  :placeholder="$t('placeholder.phone')"
-                  :label="$t('labels.phone')"
-                  required
-                  class="col-span-2"
-                  v-model="form.phone"
-                />
-                <form-input
-                  name="company_name"
-                  :placeholder="$t('placeholder.company_name')"
-                  :label="$t('labels.company_name')"
-                  required
-                  class="col-span-2"
-                  v-model="form.company_name"
-                />
-                <form-input
-                  name="company_email"
-                  :placeholder="$t('placeholder.company_email')"
-                  :label="$t('labels.company_email')"
-                  required
-                  class="col-span-2"
-                  v-model="form.company_email"
-                />
-                <core-button
-                  type="submit"
-                  :loading="loading"
-                  class="!w-full col-span-2 mt-8"
-                >
-                  {{ $t("buttons.send") }}
-                </core-button>
-              </div>
-            </template>
-          </UCard>
-        </div>
+        <component
+          :is="activeStep"
+          :key="currentStep"
+          :items="data?.items ?? []"
+          :loading="loading"
+          @next-step="nextStep"
+        />
       </transition>
     </form>
     <!-- END:: FORM ACTION -->
+
     <transition name="fade-up" mode="out-in">
       <div
         v-if="successMessage"
@@ -171,7 +66,7 @@
           سيتم التواصل معك عن طريق فريقنا في أقرب وقت ممكن
         </h3>
         <core-button class="mt-4" to="/">
-          {{ $t("buttons.go_to_home") }}
+          {{ $t('buttons.go_to_home') }}
         </core-button>
       </div>
     </transition>
@@ -179,182 +74,119 @@
 </template>
 
 <script setup lang="ts">
-import { object, string } from "yup";
-import { toTypedSchema } from "@vee-validate/yup";
+import { stepFields, useFormAction } from './useFormAction';
+
+type TStep = 'first' | 'second' | 'third';
+
+const { validationSchema, currentStep } = useFormAction();
 const { $http } = useNuxtApp();
-const route = useRoute();
-const router = useRouter();
 const loading = ref(false);
 const successMessage = ref(false);
-
-const currentStep = ref(1);
 const totalSteps = 3;
-const form = ref({
-  industry: "",
-  fleet_size: "",
-  first_name: "",
-  last_name: "",
-  phone: "",
-  company_name: "",
-  company_email: "",
+
+const mapStep: Record<number, TStep> = { 1: 'first', 2: 'second', 3: 'third' };
+
+const activeStep = computed(() => {
+  if (!currentStep.value) return null;
+
+  return defineAsyncComponent(() => import(`./steps/${mapStep[currentStep.value]}.vue`));
 });
 
-const industryItems = [
-  {
-    value: "public_sector",
-  },
-  {
-    value: "construction",
-  },
-  {
-    value: "trucking",
-  },
-  {
-    value: "tracking",
-  },
-  {
-    value: "field_services",
-  },
-  {
-    value: "oil_gas",
-  },
-  {
-    value: "other",
-  },
-];
-const fleetSizeItems = [
-  {
-    value: "1_9",
-  },
-  {
-    value: "10_49",
-  },
-  {
-    value: "50_149",
-  },
-  {
-    value: "150_999",
-  },
-  {
-    value: "1000_plus",
-  },
-];
-const fleetSizeWithTrackingItems = [
-  {
-    value: "1_10k",
-  },
-  {
-    value: "10k_50k",
-  },
-  {
-    value: "50k_100k",
-  },
-  {
-    value: "100k_200k",
-  },
-  {
-    value: "200k_plus",
-  },
-];
-const fleetItems = computed(() => {
-  const source =
-    form.value.industry === "tracking"
-      ? fleetSizeWithTrackingItems
-      : fleetSizeItems;
-
-  return source.map((item) => ({
-    label: item.value,
-    value: item.value.toString(),
-  }));
-});
-const { handleSubmit, values, setValues, validateField } = useForm<{
-  [key: string]: any;
-}>({
+// Form setup with vee-validate - initialValues preserve values between steps
+const { handleSubmit, values, validateField } = useForm({
   initialValues: {
-    industry: "",
-    fleet_size: "",
-    first_name: "",
-    last_name: "",
-    phone: "",
-    company_name: "",
-    company_email: "",
+    industry: '',
+    fleet_size: '',
+    first_name: '',
+    last_name: '',
+    phone: '',
+    company_name: '',
+    company_email: '',
   },
-  validationSchema: toTypedSchema(
-    object({
-      industry: string().required($t("errors.required")),
-      // fleet_size: string().required($t("errors.required")),
-      first_name: string().required($t("errors.required")),
-      last_name: string().required($t("errors.required")),
-      phone: string().required($t("errors.required")),
-      company_name: string().required($t("errors.required")),
-      company_email: string().required($t("errors.required")),
-    })
-  ),
+  validationSchema,
+  keepValuesOnUnmount: true,
 });
 
-const generateData = () => {
-  const formData = new FormData();
-  setValues({ ...form.value });
-  for (const key in values) {
-    // if (key.includes("_")) {
-    //   // const [lang, value] = key.split("_");
-    //   formData.append(`${lang}[${value}]`, values[key]);
-    // } else {
-    // }
-    formData.append(key, values[key]);
-  }
-  return formData;
+// Industry options
+const industryItems = [
+  { value: 'public_sector' },
+  { value: 'construction' },
+  { value: 'trucking' },
+  { value: 'tracking' },
+  { value: 'field_services' },
+  { value: 'oil_gas' },
+  { value: 'other' },
+];
+
+// Fleet size options
+const fleetSizeItems = [
+  { value: '1_9' },
+  { value: '10_49' },
+  { value: '50_149' },
+  { value: '150_999' },
+  { value: '1000_plus' },
+];
+
+const fleetSizeWithTrackingItems = [
+  { value: '1_10k' },
+  { value: '10k_50k' },
+  { value: '50k_100k' },
+  { value: '100k_200k' },
+  { value: '200k_plus' },
+];
+
+const fleetItems = computed(() => {
+  const source = values.industry === 'tracking' ? fleetSizeWithTrackingItems : fleetSizeItems;
+  return source.map(item => ({ label: item.value, value: item.value }));
+});
+
+// Data items per step
+const data = computed(() => {
+  const items: Record<number, any[]> = {
+    1: industryItems,
+    2: fleetItems.value,
+    3: [],
+  };
+  return { items: items[currentStep.value] };
+});
+
+// Validate current step fields
+const validateCurrentStep = async (): Promise<boolean> => {
+  const fields = stepFields[currentStep.value] ?? [];
+  const results = await Promise.all(fields.map(field => validateField(field)));
+  return results.every(result => result.valid);
 };
-const onSubmit = handleSubmit(async () => {
-  try {
-    loading.value = true;
-    setValues({ ...form.value });
-    await $http.contactUs.storeContact(generateData());
-    loading.value = false;
-    successMessage.value = true;
-    // if (redirect) {
-    //   setTimeout(() => {
-    //     router.push(
-    //       route.path.toString().includes('sub-categories')
-    //         ? `/categories/${route.params.id}/sub-categories`
-    //         : '/categories'
-    //     );
-    //   }, 1500);
-    // } else {
-    //   // emit('onSuccessSubmit');
-    // }
-    refreshNuxtData("categories");
-  } finally {
-    loading.value = false;
-  }
-});
 
+// Navigate to next step
 const nextStep = async () => {
+  loading.value = true;
   try {
-    loading.value = true;
-    let result;
-
-    setValues({ ...form.value });
-    if (currentStep.value === 1) {
-      result = await validateField("industry");
-      setValues({ ...form.value });
-    }
-
-    if (currentStep.value === 2) {
-      result = await validateField("fleet_size");
-      setValues({ ...form.value });
-    }
-
-    if (!result?.valid) return;
-
-    if (currentStep.value < totalSteps) {
+    const isValid = await validateCurrentStep();
+    if (isValid && currentStep.value < totalSteps) {
       currentStep.value++;
     }
   } finally {
     loading.value = false;
   }
 };
+
+// Submit form
+const onSubmit = handleSubmit(async formValues => {
+  loading.value = true;
+  try {
+    const formData = new FormData();
+    Object.entries(formValues).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+    await $http.contactUs.storeContact(formData);
+    successMessage.value = true;
+    refreshNuxtData('categories');
+  } finally {
+    loading.value = false;
+  }
+});
 </script>
+
 <style scoped>
 .contact-us-page-content-inner {
   position: relative;
