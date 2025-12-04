@@ -1,5 +1,5 @@
 import type { FetchOptions } from 'ofetch';
-import { CampaignsModule } from '~/repository/modules/campagin'; 
+import { ContactModule } from '~/repository/modules/contact'; 
 
 export default defineNuxtPlugin((nuxtApp) => {
   const { state } = useAuthStore()
@@ -47,21 +47,13 @@ export default defineNuxtPlugin((nuxtApp) => {
     },
   }
   const api = $fetch.create(fetchOptions)
-  const whatsappApi = $fetch.create({
+  
+  const websiteApi = $fetch.create({
     ...fetchOptions,
-    baseURL: runtimeConfig.public.whatsappBaseUrl,
-    onRequest({ options }) {
-      if (state.value?.whatsappToken) {
-        options.headers.set('Authorization', `Bearer ${state.value?.whatsappToken}`)
-      }
-    },
-  })
-  const dashboardApi = $fetch.create({
-    ...fetchOptions,
-    baseURL: runtimeConfig.public.apiBase + '/dashboard/pages',
+    baseURL: runtimeConfig.public.apiBase + '',
   })
   const modules = { 
-    campaigns: new CampaignsModule(dashboardApi), 
+    contactUs: new ContactModule(websiteApi), 
   }
   // Expose to useNuxtApp().$api
   // Expose to useNuxtApp().$http

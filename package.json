@@ -16,6 +16,8 @@
     "@nuxtjs/i18n": "^10.1.0",
     "@vee-validate/nuxt": "^4.15.1",
     "@vee-validate/yup": "^4.15.1",
+    "@vite-pwa/nuxt": "^1.1.0",
+    "aos": "^2.3.4",
     "cropperjs": "^1.6.2",
     "nuxt": "^4.1.2",
     "nuxt-charts": "^0.2.4",

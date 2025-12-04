@@ -1,0 +1,32 @@
+@media (max-width: 768px) {
+
+  /* START:: BUTTONS */
+  .core-button {
+    width: 100%;
+  }
+
+  /* START:: HERO SECTION */
+  .hero-section-content {
+    padding-block: 180px 110px;
+    background-size: auto 100% !important;
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+
+  /* START:: FEATURES SECTION */
+  .features-section-content {
+    padding-block: 40px;
+  }
+
+  .feature-card .big-card {
+    opacity: 1;
+  }
+
+  .custom-slider .swiper-slide.hovered-slide {
+    flex: 0 0 100% !important;
+
+  }
+  .custom-radio-group .custom-radio-group-label{
+    width: 100% !important;
+  }
+}

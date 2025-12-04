@@ -42,10 +42,18 @@ defineProps<{
 }
 .custom-navbar.navbar-scrolling .core-button.btn-link {
   color: var(--color-secondary);
-
 }
 .custom-navbar.navbar-scrolling .core-button.btn-link:hover {
   color: var(--color-primary);
+}
+.core-button.btn-link:hover .icon-image {
+  filter: var(--primary-filter) !important;
+  animation: move-arrow 1.5s infinite ease-in-out;
 
+}
+@keyframes move-arrow {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(5px); }
+  100% { transform: translateX(0); }
 }
 </style>

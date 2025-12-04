@@ -1,14 +1,31 @@
 <template>
   <!-- Mobile Top Bar -->
-  <div class="flex md:hidden items-center justify-between p-4 border-b">
-    <span class="font-bold text-lg">My App</span>
+  <div
+    class="flex md:hidden custom-navbar items-center justify-between p-4"
+    :class="[
+      ' fixed top-4 left-0 w-full z-50 h-[65px]',
+      { 'navbar-scrolling !top-0': isScrolling },
+    ]"
+  >
+    <div class="site-logo flex items-center justify-between">
+      <core-lazy-image
+        src="/imgs/logo/logo.svg"
+        placeholder-src="/imgs/logo/logo.svg"
+        alt="Logo"
+        class="w-[132px] h-[32px]"
+      />
+    </div>
 
     <!-- Toggle Button -->
     <button
       @click="toggleMenu"
       class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"
     >
-      <UIcon :name="isOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="w-6 h-6" />
+      <UIcon
+        :name="isOpen ? 'i-lucide-x' : 'i-lucide-menu'"
+        class="w-6 h-6 text-light"
+        :class="[{ 'text-secondary': isScrolling }]"
+      />
     </button>
   </div>
 
@@ -30,8 +47,12 @@
         />
       </div>
       <div class="flex items-center gap-8">
-        <core-button btnClass="btn-link" to="/login"> {{ $t("titles.login") }} </core-button>
-        <core-button> {{ $t("titles.contact_out_team") }} </core-button>
+        <core-button btnClass="btn-link" target="_blank">
+          {{ $t("titles.login") }}
+        </core-button>
+        <core-button to="/contact-us">
+          {{ $t("titles.contact_out_team") }}
+        </core-button>
       </div>
     </UContainer>
   </nav>
@@ -83,7 +104,9 @@
       class="fixed inset-0 z-50 bg-black/40 md:hidden"
       @click.self="toggleMenu"
     >
-      <aside class="w-72 h-full bg-white dark:bg-gray-900 p-4">
+      <aside
+        class="w-72 h-full bg-white dark:bg-gray-900 p-4 flex flex-col items-center justify-between flex-col gap-4"
+      >
         <!-- <UNavigationMenu :items="items" orientation="vertical">
           <template #item="{ item }">
             <NuxtLink
@@ -97,6 +120,24 @@
             </NuxtLink>
           </template>
         </UNavigationMenu> -->
+        <core-lazy-image
+          src="/imgs/logo/logo.svg"
+          placeholder-src="/imgs/logo/logo.svg"
+          alt="Logo"
+          class="w-[132px] h-[32px] secondary-filter"
+        />
+        <div class="flex items-center flex-col gap-4 w-full">
+          <core-button
+            btnClass="btn-link !text-secondary"
+            to="/login"
+            @click.self="toggleMenu"
+          >
+            {{ $t("titles.login") }}
+          </core-button>
+          <core-button to="/contact-us" @click.self="toggleMenu">
+            {{ $t("titles.contact_out_team") }}
+          </core-button>
+        </div>
       </aside>
     </div>
   </transition>
@@ -169,7 +210,7 @@ onBeforeUnmount(() => {
   transition: transform 0.3s ease, opacity 0.3s;
 }
 .slide-enter-from {
-  transform: translateX(-100%);
+  transform: translateX(100%);
   opacity: 0;
 }
 .slide-enter-to {
@@ -177,7 +218,7 @@ onBeforeUnmount(() => {
   opacity: 1;
 }
 .slide-leave-to {
-  transform: translateX(-100%);
+  transform: translateX(100%);
   opacity: 0;
 }
 .custom-navbar {
@@ -193,7 +234,6 @@ onBeforeUnmount(() => {
 
 .custom-navbar.navbar-scrolling {
   background-color: var(--color-light);
-  backdrop-filter: blur(10px);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 .custom-navbar.navbar-scrolling .site-logo .core-lazy-image .original-image {

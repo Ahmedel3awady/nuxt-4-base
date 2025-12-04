@@ -1,3 +1,5 @@
+@import './responsive.css';
+@import './animations.css';
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
@@ -11,6 +13,20 @@
   --color-secondary-gray: #DEE0DE;
   --ui-header-height: 112px;
   --secondary-filter: brightness(0) saturate(100%) invert(2%) sepia(4%) saturate(1796%) hue-rotate(168deg) brightness(107%) contrast(100%);
+  --light-filter: brightness(0) saturate(100%) invert(100%) sepia(4%) saturate(7500%) hue-rotate(247deg) brightness(118%) contrast(99%);
+  --primary-filter: brightness(0) saturate(100%) invert(100%) sepia(43%) saturate(3273%) hue-rotate(28deg) brightness(95%) contrast(64%);
+}
+
+section {
+  overflow: hidden;
+}
+
+.secondary-filter {
+  filter: var(--secondary-filter);
+}
+
+.light-filter {
+  filter: var(--light-filter);
 }
 
 @layer components {
@@ -143,6 +159,12 @@ textarea {
   resize: none;
 }
 
+body,
+html {
+  overflow-x: hidden;
+}
+
+
 .custom-slider {}
 
 .custom-slider .controls {}
@@ -211,4 +233,74 @@ textarea {
 .custom-slider .hovered-slide {
   flex: 0 0 45% !important;
   z-index: 10;
+}
+
+.animation_up_and_down {
+  animation: animation_up_and_down 12s ease 0s infinite normal none;
+
+}
+
+.animation_left_and_right {
+  animation: animation_left_and_right 12s ease 0s infinite normal none;
+
+
+}
+
+/* Copy this code after the above code */
+@keyframes animation_up_and_down {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70% {
+    transform: translateY(-8px);
+  }
+
+  20%,
+  40%,
+  60% {
+    transform: translateY(8px);
+  }
+
+  80% {
+    transform: translateY(6.4px);
+  }
+
+  90% {
+    transform: translateY(-6.4px);
+  }
+}
+
+@keyframes animation_left_and_right {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70% {
+    transform: translateX(-8px);
+  }
+
+  20%,
+  40%,
+  60% {
+    transform: translateX(8px);
+  }
+
+  80% {
+    transform: translateX(6.4px);
+  }
+
+  90% {
+    transform: translateX(-6.4px);
+  }
 }

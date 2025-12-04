@@ -12,7 +12,35 @@ export default defineNuxtConfig({
   // ssr: false,
 
   css: ["~/assets/css/main.css", "~/assets/font/stylesheet.css"],
-  modules: ["@nuxt/ui", "@nuxtjs/i18n", "@vee-validate/nuxt", "nuxt-charts"],
+  modules: ["@nuxt/ui", "@nuxtjs/i18n", "@vee-validate/nuxt", "@vite-pwa/nuxt"],
+  pwa: {
+    registerType: "autoUpdate",
+    strategies: 'generateSW',
+    outDir: '.output/public',
+    manifest: {
+      name: "My App",
+      short_name: "MyApp",
+      description: "My Nuxt PWA App",
+      theme_color: "#73AB35",
+      background_color: "#050607",
+      display: "standalone",
+      start_url: "/",
+      lang: "ar",
+      icons: [
+        {
+          src: "/icon.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "/icon.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+      ],
+    },
+  },
+
   icon: {
     // Server-side bundling (works even in SPA mode during build)
     serverBundle: {
@@ -56,7 +84,6 @@ export default defineNuxtConfig({
   },
   ui: {
     colorMode: false,
-
   },
   i18n: {
     defaultLocale: "ar",

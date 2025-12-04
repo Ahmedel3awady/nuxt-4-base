@@ -1,5 +1,6 @@
 <template>
-  <main class="home-page-content">
+  <core-page-loader :loading="loadingPage" />
+  <main class="home-page-content" v-if="!loadingPage">
     <!-- START:: HERO SECTION -->
     <sections-hero-section />
     <!-- END:: HERO SECTION -->
@@ -7,19 +8,28 @@
     <!-- START:: FEATURES SECTION -->
     <sections-features-section />
     <!-- END:: FEATURES SECTION -->
-     
+
+    <!-- START:: PLATFORM SECTION -->
+    <sections-platform />
+    <!-- END:: PLATFORM SECTION -->
+
+    <!-- START:: PRIORITIES SECTION --> 
+    <sections-priorities />
+    <!-- END:: PRIORITIES SECTION -->
+
+    <!-- START:: TRY SECTION -->
+    <sections-try />
+    <!-- END:: TRY SECTION -->
   </main>
 </template>
 
 <script setup lang="ts">
-const images = [
-  "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
-  "/imgs/sample2.jpg",
-  "/imgs/sample3.jpg",
-  "/imgs/sample4.jpg",
-  "/imgs/sample5.jpg",
-  "/imgs/sample6.jpg",
-];
+const loadingPage = ref(true);
+onMounted(() => {
+  setTimeout(() => {
+    loadingPage.value = false;
+  }, 1000);
+});
 // definePageMeta({
 //   name: 'home',
 //   permission: 'show_statuses_reports',

@@ -66,7 +66,7 @@ const color = computed(() => props.color ?? 'primary');
 
 // Custom form field styling
 const formFieldUi = computed(() => ({
-  label: 'text-secondary font-medium',
+  label: 'text-[#636463] font-medium mb-2',
   error: 'text-error text-sm',
   help: 'text-gray-500 text-sm',
 }));

@@ -4,16 +4,35 @@
       <div
         class="hero-section-content-inner text-center col-span-12 lg:col-span-8 lg:col-start-3"
       >
-        <h1 class="text-light lg:text-7xl text-5xl font-bold mb-6">
+        <h1
+          class="text-light lg:text-7xl text-5xl font-bold mb-6"
+          data-aos="fade-up"
+          data-aos-duration="500"
+          data-aos-delay="100"
+        >
           {{ $t("app.title") }}
         </h1>
-        <h2 class="text-light lg:text-[56px] text-3xl font-semibold">
+        <h2
+          class="text-light lg:text-[56px] text-3xl font-semibold"
+          data-aos="fade-up"
+          data-aos-duration="600"
+          data-aos-delay="150"
+        >
           {{ $t("app.sub_title") }}
         </h2>
-        <p class="text-light-gray lg:text-2xl text-xl font-normal my-10 leading-[2.4rem]">
+        <p
+          class="text-light-gray lg:text-2xl text-xl font-normal my-10 leading-[2.4rem]"
+          data-aos="fade-up"
+          data-aos-duration="700"
+          data-aos-delay="200"
+        >
           {{ $t("app.description") }}
         </p>
-        <p class="text-light-gray text-2xl font-normal">
+        <p class="text-light-gray text-2xl font-normal"
+        data-aos="fade-up"
+        data-aos-duration="800"
+        data-aos-delay="250"
+        >
           {{ $t("app.sub_description") }}
         </p>
       </div>

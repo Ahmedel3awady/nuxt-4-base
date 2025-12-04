@@ -7,9 +7,10 @@
         :breakpoints="breakpoints"
         :space-between="spaceBetween"
         dir="rtl"
+        :loop="true"
         @swiper="onSwiperInit"
         :autoplay="{
-          delay: 10000,
+          delay: 5000,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }"

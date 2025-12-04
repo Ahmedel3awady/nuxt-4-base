@@ -8,11 +8,38 @@
   "titles": {
     "home": "الرئيسية",
     "contact_out_team": "تحدث إلي فريقنا",
-    "login": "تسجيل الدخول"
+    "login": "تسجيل الدخول",
+    "all_rights_reserved": "جميع الحقوق محفوظة لدي"
   },
-  "button": {
-    "add": "إضافة"
+  "buttons": {
+    "add": "إضافة",
+    "next": "التالي",
+    "previous": "السابق",
+    "send": "إرسال",
+    "go_to_home": "الذهاب الي الرئيسية"
   },
-  "labels": {},
-  "placeholder": {}
+  "labels": {
+    "public_sector": "القطاع العام",
+    "construction": "البناء والتشييد",
+    "trucking": "النقل بالشاحنات",
+    "tracking": "التتبع",
+    "field_services": "الخدمات الميدانية",
+    "oil_gas": "النفط والغاز",
+    "other": "أخري",
+    "first_name": "الاسم الأول",
+    "last_name": "الاسم الأخير",
+    "company_name": "اسم الشركة",
+    "company_email": "البريد الإلكتروني للشركة",
+    "phone": "رقم الهاتف"
+  },
+  "placeholder": {
+    "first_name": "ادخل الاسم الأول",
+    "last_name": "ادخل الاسم الأخير",
+    "company_name": "ادخل اسم الشركة",
+    "company_email": "ادخل البريد الإلكتروني للشركة",
+    "phone": "ادخل رقم الهاتف"
+  },
+  "errors": {
+    "required": "هذا الحقل مطلوب"
+  }
 }

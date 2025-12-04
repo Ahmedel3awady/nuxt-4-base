@@ -12,6 +12,7 @@
         :alt="'placeholder-' + alt"
         class="placeholder-image w-full h-auto object-cover absolute top-0 left-0"
         key="placeholder"
+        loading="lazy"
       />
     </transition>
 
@@ -24,6 +25,7 @@
         class="original-image w-full h-auto object-cover relative"
         key="main"
         @load="onLoad"
+        loading="lazy"
       />
     </transition>
   </div>

@@ -5,7 +5,7 @@
     :error="errors[0]"
     :required="required"
     :ui="{
-      label: 'text-secondary font-medium mb-2 block',
+      label: '!text-gray font-medium mb-2 block',
       error: 'text-error text-sm mt-2',
     }"
   >

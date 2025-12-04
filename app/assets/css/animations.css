@@ -1,0 +1,59 @@
+.fade-up-enter-active,
+.fade-up-leave-active {
+    transition: all 0.35s ease;
+}
+
+.fade-up-enter-from {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.fade-up-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.fade-slide-enter-from {
+    opacity: 0;
+    transform: translateY(20px);
+    max-height: 0;
+}
+
+.fade-slide-enter-to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 1000px;
+    /* قيمة كبيرة لتغطي محتوى الخطوة */
+}
+
+/* خروج */
+.fade-slide-leave-from {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 1000px;
+}
+
+.fade-slide-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+}
+
+.slither-enter-active,
+.slither-leave-active {
+  transition-duration: 0.6s;
+  transition-property: opacity transform;
+  overflow: hidden;
+}
+
+.slither-enter,
+.slither-leave-to {
+  opacity: 0;
+  transform: translate(-3em, 0);
+}
+
+.slither-enter-to,
+.slither-leave {
+  opacity: 1;
+  transform: translate(0em, 0);
+}
