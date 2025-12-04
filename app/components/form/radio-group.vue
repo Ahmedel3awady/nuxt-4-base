@@ -1,7 +1,7 @@
 <template>
   <div>
     <URadioGroup
-      v-model="value as any"
+      v-model="value"
       :items="items"
       size="xl"
       variant="card"
@@ -31,10 +31,9 @@
             class="w-12 h-12 pointer-events-none"
             v-if="item?.icon"
           />
-          <span
-            class="custom-radio-group-label-text text-light text-lg font-medium"
-            >{{ item.label }}</span
-          >
+          <span class="custom-radio-group-label-text text-light text-lg font-medium">{{
+            item.label
+          }}</span>
         </div>
       </template>
     </URadioGroup>
@@ -47,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import type { RadioGroupItem, RadioGroupProps } from "@nuxt/ui";
+import type { RadioGroupItem, RadioGroupProps } from '@nuxt/ui';
 
 defineOptions({
   inheritAttrs: false,
@@ -60,12 +59,11 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {});
-const { value, errors } = useCustomField<any[]>(props.name);
+const { value, errors } = useCustomField<string>(props.name);
 </script>
 <style>
-.custom-radio-group{
+.custom-radio-group {
   padding: 0 !important;
-
 }
 .custom-radio-group .custom-radio-group-label {
   height: 145px;

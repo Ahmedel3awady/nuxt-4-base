@@ -24,26 +24,35 @@ function copyDir(src, dest) {
 }
 
 try {
-  const sourceDir = '.output/public';
+  // Check for both possible output directories
+  const sourceDir = existsSync('.output/public') ? '.output/public' : null;
   const targetDir = 'dist';
 
-  console.log('📦 Copying build output to dist folder...');
+  console.log('📦 Checking build output...');
 
-  // Remove existing dist folder if it exists
-  if (existsSync(targetDir)) {
-    console.log('🗑️  Removing old dist folder...');
-    rmSync(targetDir, { recursive: true, force: true });
+  // If dist already exists (from Nuxt production build), no need to copy
+  if (existsSync(targetDir) && !sourceDir) {
+    console.log('✅ Build output already in dist folder (production build)!');
+    process.exit(0);
   }
 
-  // Copy .output/public to dist
-  if (existsSync(sourceDir)) {
+  // If .output/public exists, copy it to dist (development build)
+  if (sourceDir) {
+    console.log('📦 Copying build output to dist folder...');
+    
+    // Remove existing dist folder if it exists
+    if (existsSync(targetDir)) {
+      console.log('🗑️  Removing old dist folder...');
+      rmSync(targetDir, { recursive: true, force: true });
+    }
+
     copyDir(sourceDir, targetDir);
     console.log('✅ Successfully copied build to dist folder!');
-  } else {
-    console.error('❌ Source directory not found:', sourceDir);
+  } else if (!existsSync(targetDir)) {
+    console.error('❌ No build output found in .output/public or dist');
     process.exit(1);
   }
 } catch (error) {
-  console.error('❌ Error copying files:', error);
+  console.error('❌ Error processing files:', error);
   process.exit(1);
 }
