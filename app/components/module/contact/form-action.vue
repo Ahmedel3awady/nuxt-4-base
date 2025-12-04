@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { stepFields, useFormAction } from './useFormAction';
+import { useFormAction } from './useFormAction';
 
 type TStep = 'first' | 'second' | 'third';
 
@@ -93,7 +93,7 @@ const activeStep = computed(() => {
 });
 
 // Form setup with vee-validate - initialValues preserve values between steps
-const { handleSubmit, values, validateField } = useForm({
+const { handleSubmit, values, validate } = useForm({
   initialValues: {
     industry: '',
     fleet_size: '',
@@ -136,7 +136,8 @@ const fleetSizeWithTrackingItems = [
 ];
 
 const fleetItems = computed(() => {
-  const source = values.industry === 'tracking' ? fleetSizeWithTrackingItems : fleetSizeItems;
+  //@ts-ignore
+  const source = values?.industry == 'tracking' ? fleetSizeWithTrackingItems : fleetSizeItems;
   return source.map(item => ({ label: item.value, value: item.value }));
 });
 
@@ -150,19 +151,12 @@ const data = computed(() => {
   return { items: items[currentStep.value] };
 });
 
-// Validate current step fields
-const validateCurrentStep = async (): Promise<boolean> => {
-  const fields = stepFields[currentStep.value] ?? [];
-  const results = await Promise.all(fields.map(field => validateField(field)));
-  return results.every(result => result.valid);
-};
-
 // Navigate to next step
 const nextStep = async () => {
   loading.value = true;
   try {
-    const isValid = await validateCurrentStep();
-    if (isValid && currentStep.value < totalSteps) {
+    const isValid = await validate();
+    if (isValid.valid) {
       currentStep.value++;
     }
   } finally {
